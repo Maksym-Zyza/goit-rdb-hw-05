@@ -29,3 +29,35 @@ where quantity > 10
 ) as temp_table
 group by order_id;
 ```
+
+## task 4
+
+```sql
+With temp_table as (
+select * from order_details od
+where quantity > 10 
+)
+Select order_id, avg(quantity) as avg_quantity from temp_table 
+group by order_id;
+```
+
+## task 5
+
+```sql
+Drop function if exists getDivisionOfParams;
+
+Delimiter //
+Create function getDivisionOfParams(first_num float, second_num float)
+returns float
+deterministic
+no sql
+begin
+declare result float;
+set result = first_num / second_num;
+return result;
+end //
+Delimiter ;
+
+select order_id, quantity, getDivisionOfParams(quantity, 3) as newQuantity
+from order_details;
+```
